@@ -16,7 +16,7 @@ const Footer: FC = () => {
             className={classes.marvel_footer_logo}
           />
           <p className={classes.marvel_footer_text}>
-            Data provided by Marvel. © {CURRENT_YEAR} MARVEL
+            Data provided by Marvel. {`© ${CURRENT_YEAR} MARVEL`}
           </p>
           <a
             href="http://developer.marvel.com/"

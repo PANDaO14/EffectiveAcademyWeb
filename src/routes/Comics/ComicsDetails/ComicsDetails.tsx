@@ -7,7 +7,7 @@ import characterData from '../../Characters/CharactersData';
 import classes from './ComicsDetails.module.scss';
 
 // Types
-import ComicsCardDetailsDTO from '../../../types/ComicsCardDetailsDTO';
+import ComicsCardDetailsDTO from 'types/ComicsCardDetailsDTO';
 
 const ComicsDetails: FC = () => {
   const comics: ComicsCardDetailsDTO = useOutletContext();

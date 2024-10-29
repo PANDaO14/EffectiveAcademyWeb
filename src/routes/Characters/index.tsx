@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import characterData from './CharactersData';
 
 // Components
-import FormSearch from '../../components/FormSearch/FormSearch';
-import CharacterCard from '../../components/Cards/CharacterCard/CharacterCard';
+import FormSearch from 'components/FormSearch/FormSearch';
+import CharacterCard from 'components/Cards/CharacterCard/CharacterCard';
 
 // Styles
 import classes from './Characters.module.scss';

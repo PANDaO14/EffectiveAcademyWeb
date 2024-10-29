@@ -1,4 +1,4 @@
-import CharacterCardDetailsDTO from '../../types/CharacterCardDetailsDTO';
+import CharacterCardDetailsDTO from 'types/CharacterCardDetailsDTO';
 
 const characterData: CharacterCardDetailsDTO[] = [
   {

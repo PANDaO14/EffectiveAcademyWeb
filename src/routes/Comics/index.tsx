@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import comicsData from './ComicsData';
 
 // Components
-import FormSearch from '../../components/FormSearch/FormSearch';
-import ComicsCard from '../../components/Cards/ComicsCard/ComicsCard';
+import FormSearch from 'components/FormSearch/FormSearch';
+import ComicsCard from 'components/Cards/ComicsCard/ComicsCard';
 
 // Styles
 import classes from './Comics.module.scss';

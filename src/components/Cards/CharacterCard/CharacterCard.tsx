@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 // Types
-import CardDTO from '../../../types/CardDTO';
+import CardDTO from 'types/CardDTO';
 
 // Styles
 import classes from './CharacterCard.module.scss';

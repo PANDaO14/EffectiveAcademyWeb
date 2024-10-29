@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 
 // Routes
-import Characters from '../../routes/Characters';
-import characterData from '../../routes/Characters/CharactersData';
+import Characters from 'routes/Characters';
+import characterData from 'routes/Characters/CharactersData';
 
 const CharacterLayout: FC = () => {
   const { id } = useParams();

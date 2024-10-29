@@ -1,8 +1,8 @@
 import { Navigate, type RouteObject } from 'react-router-dom';
 
-import Layout from '../layouts';
-import CharacterLayout from '../layouts/Character';
-import ComicsLayout from '../layouts/Comics';
+import Layout from 'layouts/index';
+import CharacterLayout from 'layouts/Character';
+import ComicsLayout from 'layouts/Comics';
 
 import CharacterDetails from './Characters/CharacterDetails/CharacterDetails';
 import ComicsDetails from './Comics/ComicsDetails/ComicsDetails';
