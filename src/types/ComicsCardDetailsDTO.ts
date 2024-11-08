@@ -1,5 +1,12 @@
 import CardDTO from './CardDTO';
 
 export default interface ComicsCardDetailsDTO extends CardDTO {
-  charactersId: number[];
+  characters: {
+    items: [
+      {
+        resourceURI: string;
+        name: string;
+      }
+    ];
+  };
 }

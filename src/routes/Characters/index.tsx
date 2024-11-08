@@ -1,17 +1,28 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-import characterData from './CharactersData';
+import { observer } from 'mobx-react-lite';
 
 // Components
 import FormSearch from 'components/FormSearch/FormSearch';
 import CharacterCard from 'components/Cards/CharacterCard/CharacterCard';
+import Loading from 'components/Loading';
 
 // Styles
+import characterStore from 'stores/CharacterStore';
 import classes from './Characters.module.scss';
 
+// Stores
+
 const Characters: FC = () => {
-  const characters = characterData;
+  const { characters, loading } = characterStore;
+
+  useEffect(() => {
+    characterStore.getCharactersList();
+  }, []);
+
+  if (!characters) {
+    return <div>Нет карт</div>;
+  }
 
   return (
     <main>
@@ -19,14 +30,14 @@ const Characters: FC = () => {
         <FormSearch type="Characters" count={characters.length} />
         <hr className="divider" />
         <section className={classes.characters_cards}>
-          {characters.length > 0 ? (
+          {!loading ? (
             characters.map((character) => (
               <Link to={`/characters/${character.id}`} key={character.id}>
                 <CharacterCard {...character} key={character.id} />
               </Link>
             ))
           ) : (
-            <div>Нет карт</div>
+            <Loading />
           )}
         </section>
       </div>
@@ -34,4 +45,4 @@ const Characters: FC = () => {
   );
 };
 
-export default Characters;
+export default observer(Characters);

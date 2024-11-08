@@ -3,23 +3,17 @@ import { Outlet, useParams } from 'react-router-dom';
 
 // Routes
 import Characters from 'routes/Characters';
-import characterData from 'routes/Characters/CharactersData';
+import characterStore from 'stores/CharacterStore';
 
 const CharacterLayout: FC = () => {
   const { id } = useParams();
-  const characterDetails = characterData.find(
+
+  const { characters } = characterStore;
+  const characterDetails = characters.find(
     (character) => character.id === Number(id)
   );
 
-  return (
-    <>
-      {characterDetails ? (
-        <Outlet context={characterDetails} />
-      ) : (
-        <Characters />
-      )}
-    </>
-  );
+  return <>{characterDetails ? <Outlet /> : <Characters />}</>;
 };
 
 export default CharacterLayout;

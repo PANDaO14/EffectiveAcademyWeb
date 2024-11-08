@@ -3,13 +3,17 @@ import { Outlet, useParams } from 'react-router-dom';
 
 // Routes
 import Comics from 'routes/Comics';
-import comicsData from 'routes/Comics/ComicsData';
+
+// Stores
+import comicsStore from 'stores/ComicsStore';
 
 const ComicsLayout: FC = () => {
   const { id } = useParams();
-  const comicsDetails = comicsData.find((comics) => comics.id === Number(id));
 
-  return <>{comicsDetails ? <Outlet context={comicsDetails} /> : <Comics />}</>;
+  const { AllComics } = comicsStore;
+  const comicsDetails = AllComics.find((com) => com.id === Number(id));
+
+  return <>{comicsDetails ? <Outlet /> : <Comics />}</>;
 };
 
 export default ComicsLayout;

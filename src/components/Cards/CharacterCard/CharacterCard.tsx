@@ -6,12 +6,16 @@ import CardDTO from 'types/CardDTO';
 // Styles
 import classes from './CharacterCard.module.scss';
 
-const CharacterCard: FC<CardDTO> = ({ img, title, description }) => {
+const CharacterCard: FC<CardDTO> = ({ thumbnail, name, description }) => {
   return (
     <div className={classes.character_card}>
-      <img className={classes.character_card_img} src={img} alt={title} />
+      <img
+        className={classes.character_card_img}
+        src={`${thumbnail.path}.${thumbnail.extension}`}
+        alt={name}
+      />
       <div className={classes.character_card_container}>
-        <h3 className={classes.character_card_title}>{title}</h3>
+        <h3 className={classes.character_card_title}>{name}</h3>
         <p className={classes.character_card_desc}>{description}</p>
       </div>
     </div>
