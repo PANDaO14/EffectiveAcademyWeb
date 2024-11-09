@@ -6,19 +6,21 @@ import { observer } from 'mobx-react-lite';
 import FormSearch from 'components/FormSearch/FormSearch';
 import ComicsCard from 'components/Cards/ComicsCard/ComicsCard';
 import Loading from 'components/Loading';
-
-// Styles
-import comicsStore from 'stores/ComicsStore';
-import classes from './Comics.module.scss';
+import Pagination from 'components/Pagination/Pagination';
 
 // Stores
+import comicsStore from 'stores/ComicsStore';
+import paginationStore from 'stores/PaginationStore';
+
+import classes from './Comics.module.scss';
 
 const Comics: FC = () => {
   const { AllComics, loading } = comicsStore;
+  const { currentPage, total, offset } = paginationStore;
 
   useEffect(() => {
-    comicsStore.getComicsList();
-  }, []);
+    comicsStore.getComicsList(offset);
+  }, [currentPage]);
 
   if (!AllComics) {
     return <div>Нет карт</div>;
@@ -27,7 +29,7 @@ const Comics: FC = () => {
   return (
     <main>
       <div className="inner_container">
-        <FormSearch type="Comics" count={AllComics.length} />
+        <FormSearch type="Comics" count={total} />
         <hr className="divider" />
         <section className={classes.comics_cards}>
           {!loading ? (
@@ -40,6 +42,7 @@ const Comics: FC = () => {
             <Loading />
           )}
         </section>
+        <Pagination currentPage={currentPage} />
       </div>
     </main>
   );

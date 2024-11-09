@@ -1,19 +1,19 @@
 import axios from 'axios';
 
 // Types
-import CardDTO from 'types/CardDTO';
 import CharacterCardDetailsDTO from 'types/CharacterCardDetailsDTO';
+import CardDataContainer from 'types/CardDataContainer';
 
 // Config
 import envs from 'config/enviroments';
 
 export default {
-  async getCharactersList(): Promise<CardDTO[]> {
+  async getCharactersList(offset: number): Promise<CardDataContainer> {
     const response = await axios.get(
-      `/api/v1/public/characters?ts=${envs.ts}&apikey=${envs.apiKey}&hash=${envs.hash}&limit=${envs.limit}`
+      `/api/v1/public/characters?ts=${envs.ts}&apikey=${envs.apiKey}&hash=${envs.hash}&limit=${envs.limit}&offset=${offset}`
     );
 
-    return response.data.data.results;
+    return response.data.data;
   },
 
   async getCharacter(characterId: number): Promise<CharacterCardDetailsDTO> {

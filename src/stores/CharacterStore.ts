@@ -7,6 +7,7 @@ import api from 'api/index';
 // Types
 import CardDTO from 'types/CardDTO';
 import CharacterCardDetailsDTO from 'types/CharacterCardDetailsDTO';
+import paginationStore from './PaginationStore';
 
 class CharacterStore {
   @observable
@@ -23,14 +24,17 @@ class CharacterStore {
   }
 
   @action
-  getCharactersList = async (): Promise<void> => {
+  getCharactersList = async (offsetValue: number): Promise<void> => {
     try {
       this.loading = true;
 
-      const characters = await api.characters.getCharactersList();
+      const { limit, total, results } = await api.characters.getCharactersList(
+        offsetValue
+      );
 
       runInAction(() => {
-        this.characters = characters;
+        this.characters = results;
+        paginationStore.setPagination(total, limit);
       });
     } catch (error) {
       toast.error(`Ошибка ${error}`);

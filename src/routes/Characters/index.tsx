@@ -6,19 +6,21 @@ import { observer } from 'mobx-react-lite';
 import FormSearch from 'components/FormSearch/FormSearch';
 import CharacterCard from 'components/Cards/CharacterCard/CharacterCard';
 import Loading from 'components/Loading';
-
-// Styles
-import characterStore from 'stores/CharacterStore';
-import classes from './Characters.module.scss';
+import Pagination from 'components/Pagination/Pagination';
 
 // Stores
+import characterStore from 'stores/CharacterStore';
+import paginationStore from 'stores/PaginationStore';
+
+import classes from './Characters.module.scss';
 
 const Characters: FC = () => {
   const { characters, loading } = characterStore;
+  const { currentPage, total, offset } = paginationStore;
 
   useEffect(() => {
-    characterStore.getCharactersList();
-  }, []);
+    characterStore.getCharactersList(offset);
+  }, [currentPage]);
 
   if (!characters) {
     return <div>Нет карт</div>;
@@ -27,7 +29,7 @@ const Characters: FC = () => {
   return (
     <main>
       <div className="inner_container">
-        <FormSearch type="Characters" count={characters.length} />
+        <FormSearch type="Characters" count={total} />
         <hr className="divider" />
         <section className={classes.characters_cards}>
           {!loading ? (
@@ -40,6 +42,7 @@ const Characters: FC = () => {
             <Loading />
           )}
         </section>
+        <Pagination currentPage={currentPage} />
       </div>
     </main>
   );
