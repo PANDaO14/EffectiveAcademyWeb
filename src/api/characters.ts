@@ -16,6 +16,16 @@ export default {
     return response.data.data;
   },
 
+  async getCharactersListBySearch(
+    nameStartsWith: string
+  ): Promise<CardDataContainer> {
+    const response = await axios.get(
+      `/api/v1/public/characters?ts=${envs.ts}&apikey=${envs.apiKey}&hash=${envs.hash}&limit=${envs.limit}&nameStartsWith=${nameStartsWith}`
+    );
+
+    return response.data.data;
+  },
+
   async getCharacter(characterId: number): Promise<CharacterCardDetailsDTO> {
     const response = await axios.get(
       `/api/v1/public/characters/${characterId}?ts=${envs.ts}&apikey=${envs.apiKey}&hash=${envs.hash}`

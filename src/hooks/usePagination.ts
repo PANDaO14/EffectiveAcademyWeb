@@ -1,8 +1,8 @@
-const usePagination = (
+export default function usePagination(
   totalPages: number,
   currentPage: number,
   breakLabel: string
-) => {
+) {
   const siblingCount: number = 3;
 
   const range = (start: number, end: number): number[] => {
@@ -35,6 +35,4 @@ const usePagination = (
   }
 
   return [];
-};
-
-export default usePagination;
+}

@@ -7,6 +7,8 @@ import api from 'api/index';
 // Types
 import CardDTO from 'types/CardDTO';
 import ComicsCardDetailsDTO from 'types/ComicsCardDetailsDTO';
+
+// Stores
 import paginationStore from './PaginationStore';
 
 class ComicsStore {
@@ -29,6 +31,28 @@ class ComicsStore {
       this.loading = true;
 
       const { limit, total, results } = await api.comics.getComicsList(offset);
+
+      runInAction(() => {
+        this.AllComics = results;
+        paginationStore.setPagination(total, limit);
+      });
+    } catch (error) {
+      toast.error(`Ошибка ${error}`);
+    } finally {
+      runInAction(() => {
+        this.loading = false;
+      });
+    }
+  };
+
+  @action
+  getComicsListBySearch = async (nameStartsWith: string): Promise<void> => {
+    try {
+      this.loading = true;
+
+      const { limit, total, results } = await api.comics.getComicsListBySearch(
+        nameStartsWith
+      );
 
       runInAction(() => {
         this.AllComics = results;
