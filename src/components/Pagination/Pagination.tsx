@@ -1,17 +1,25 @@
 import { FC } from 'react';
-import paginationStore from 'stores/PaginationStore';
-
-import usePagination from 'hooks/usePagination';
-import classes from './Pagination.module.scss';
 
 // Hooks
+import usePagination from 'hooks/usePagination';
+
+import classes from './Pagination.module.scss';
 
 type PaginationProps = {
+  totalItems: number;
+  itemsPerPage: number;
   currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const Pagination: FC<PaginationProps> = ({ currentPage }) => {
-  const { totalPages } = paginationStore;
+const Pagination: FC<PaginationProps> = ({
+  totalItems,
+  itemsPerPage,
+  currentPage,
+  setCurrentPage
+}) => {
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
   const pageNumbers = usePagination(totalPages, currentPage, '...');
 
   return (
@@ -19,7 +27,7 @@ const Pagination: FC<PaginationProps> = ({ currentPage }) => {
       <ul className={classes.pagination__nums}>
         <li>
           <button
-            onClick={() => paginationStore.setPage(currentPage - 1)}
+            onClick={() => setCurrentPage(currentPage - 1)}
             disabled={currentPage === 1}
             className={classes.pagination__nums_prev_btn}
             type="button"
@@ -36,7 +44,7 @@ const Pagination: FC<PaginationProps> = ({ currentPage }) => {
             <button
               onClick={() => {
                 if (typeof number === 'number') {
-                  paginationStore.setPage(number);
+                  setCurrentPage(number);
                 }
               }}
               className={`${classes.pagination__nums_btn} ${
@@ -51,8 +59,8 @@ const Pagination: FC<PaginationProps> = ({ currentPage }) => {
         <li>
           <button
             className={classes.pagination__nums_next_btn}
-            onClick={() => paginationStore.setPage(currentPage + 1)}
-            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(currentPage + 1)}
+            disabled={currentPage === totalPages || totalPages <= 1}
             type="button"
           >
             <img

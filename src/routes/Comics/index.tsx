@@ -11,7 +11,6 @@ import NothingFound from 'components/NothingFound';
 
 // Stores
 import comicsStore from 'stores/ComicsStore';
-import paginationStore from 'stores/PaginationStore';
 
 // Hooks
 import useDebounce from 'hooks/useDebounce';
@@ -19,19 +18,25 @@ import useDebounce from 'hooks/useDebounce';
 import classes from './Comics.module.scss';
 
 const Comics: FC = () => {
-  const { AllComics, loading } = comicsStore;
-  const { currentPage, total, offset } = paginationStore;
+  const { AllComics, loading, total, limit } = comicsStore;
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
+  const offset = (currentPage - 1) * limit;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debouncedSearchTerm]);
+
   useEffect(() => {
     if (debouncedSearchTerm) {
-      comicsStore.getComicsListBySearch(debouncedSearchTerm);
+      comicsStore.getComicsList(offset, debouncedSearchTerm);
     } else {
       comicsStore.getComicsList(offset);
     }
-  }, [currentPage, debouncedSearchTerm]);
+  }, [debouncedSearchTerm, offset]);
 
   return (
     <main>
@@ -51,7 +56,12 @@ const Comics: FC = () => {
         {!loading && debouncedSearchTerm && AllComics.length === 0 && (
           <NothingFound />
         )}
-        <Pagination currentPage={currentPage} />
+        <Pagination
+          currentPage={currentPage}
+          itemsPerPage={limit}
+          totalItems={total}
+          setCurrentPage={setCurrentPage}
+        />
       </div>
     </main>
   );

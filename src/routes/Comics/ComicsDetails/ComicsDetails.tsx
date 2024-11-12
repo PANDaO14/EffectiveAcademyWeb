@@ -16,8 +16,11 @@ const ComicsDetails: FC = () => {
   const { comics, loading } = comicsStore;
 
   useEffect(() => {
-    comicsStore.getComics(Number(id));
-  }, []);
+    console.log('Comics Details');
+    if (id) {
+      comicsStore.getComics(Number(id));
+    }
+  }, [id]);
 
   if (loading) {
     return <Loading />;

@@ -8,9 +8,6 @@ import api from 'api/index';
 import CardDTO from 'types/CardDTO';
 import ComicsCardDetailsDTO from 'types/ComicsCardDetailsDTO';
 
-// Stores
-import paginationStore from './PaginationStore';
-
 class ComicsStore {
   @observable
   AllComics: CardDTO[] = [];
@@ -21,42 +18,33 @@ class ComicsStore {
   @observable
   loading: boolean = false;
 
+  @observable
+  total: number = 0;
+
+  @observable
+  limit: number = 0;
+
   constructor() {
     makeObservable(this);
   }
 
   @action
-  getComicsList = async (offset: number): Promise<void> => {
+  getComicsList = async (
+    offset: number,
+    nameStartsWith?: string
+  ): Promise<void> => {
     try {
       this.loading = true;
 
-      const { limit, total, results } = await api.comics.getComicsList(offset);
-
-      runInAction(() => {
-        this.AllComics = results;
-        paginationStore.setPagination(total, limit);
-      });
-    } catch (error) {
-      toast.error(`Ошибка ${error}`);
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
-    }
-  };
-
-  @action
-  getComicsListBySearch = async (nameStartsWith: string): Promise<void> => {
-    try {
-      this.loading = true;
-
-      const { limit, total, results } = await api.comics.getComicsListBySearch(
+      const { limit, total, results } = await api.comics.getComicsList(
+        offset,
         nameStartsWith
       );
 
       runInAction(() => {
         this.AllComics = results;
-        paginationStore.setPagination(total, limit);
+        this.total = total;
+        this.limit = limit;
       });
     } catch (error) {
       toast.error(`Ошибка ${error}`);
@@ -73,11 +61,9 @@ class ComicsStore {
       this.loading = true;
 
       const comics = await api.comics.getComics(id);
-      console.log(comics);
 
       runInAction(() => {
         this.comics = comics;
-        console.log(this.comics);
       });
     } catch (error) {
       toast.error(`Ошибка ${error}`);

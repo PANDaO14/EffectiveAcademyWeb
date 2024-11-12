@@ -11,7 +11,6 @@ import NothingFound from 'components/NothingFound';
 
 // Stores
 import characterStore from 'stores/CharacterStore';
-import paginationStore from 'stores/PaginationStore';
 
 // Hooks
 import useDebounce from 'hooks/useDebounce';
@@ -19,19 +18,25 @@ import useDebounce from 'hooks/useDebounce';
 import classes from './Characters.module.scss';
 
 const Characters: FC = () => {
-  const { characters, loading } = characterStore;
-  const { currentPage, total, offset } = paginationStore;
+  const { characters, loading, total, limit } = characterStore;
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 1000);
 
+  const offset = (currentPage - 1) * limit;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debouncedSearchTerm]);
+
   useEffect(() => {
     if (debouncedSearchTerm) {
-      characterStore.getCharactersListBySearch(debouncedSearchTerm);
+      characterStore.getCharactersList(offset, debouncedSearchTerm);
     } else {
       characterStore.getCharactersList(offset);
     }
-  }, [currentPage, debouncedSearchTerm]);
+  }, [debouncedSearchTerm, offset]);
 
   return (
     <main>
@@ -48,14 +53,19 @@ const Characters: FC = () => {
             characters.length > 0 &&
             characters.map((character) => (
               <Link to={`/characters/${character.id}`} key={character.id}>
-                <CharacterCard {...character} key={character.id} />
+                <CharacterCard {...character} />
               </Link>
             ))}
         </section>
         {!loading && debouncedSearchTerm && characters.length === 0 && (
           <NothingFound />
         )}
-        <Pagination currentPage={currentPage} />
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalItems={total}
+          itemsPerPage={limit}
+        />
       </div>
     </main>
   );

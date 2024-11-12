@@ -8,19 +8,16 @@ import CardDataContainer from 'types/CardDataContainer';
 import envs from 'config/enviroments';
 
 export default {
-  async getCharactersList(offset: number): Promise<CardDataContainer> {
-    const response = await axios.get(
-      `/api/v1/public/characters?ts=${envs.ts}&apikey=${envs.apiKey}&hash=${envs.hash}&limit=${envs.limit}&offset=${offset}`
-    );
-
-    return response.data.data;
-  },
-
-  async getCharactersListBySearch(
-    nameStartsWith: string
+  async getCharactersList(
+    offset: number,
+    nameStartsWith?: string
   ): Promise<CardDataContainer> {
     const response = await axios.get(
-      `/api/v1/public/characters?ts=${envs.ts}&apikey=${envs.apiKey}&hash=${envs.hash}&limit=${envs.limit}&nameStartsWith=${nameStartsWith}`
+      `/api/v1/public/characters?ts=${envs.ts}&apikey=${envs.apiKey}&hash=${
+        envs.hash
+      }&limit=${envs.limit}&offset=${offset}${
+        nameStartsWith ? `&nameStartsWith=${nameStartsWith}` : ''
+      }`
     );
 
     return response.data.data;

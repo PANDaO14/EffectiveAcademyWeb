@@ -19,7 +19,7 @@ const FormSearch: FC<FormSearchProps> = ({ type, count, setSearchTerm }) => {
     const formData = new FormData(event.target as HTMLFormElement);
     const searchTerm = formData.get('search') as string;
     setSearchTerm(searchTerm);
-    event.target.reset();
+    (event.target as HTMLFormElement).reset();
   };
 
   return (

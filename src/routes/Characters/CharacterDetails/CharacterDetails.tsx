@@ -16,8 +16,11 @@ const CharacterDetails: FC = () => {
   const { character, loading } = characterStore;
 
   useEffect(() => {
-    characterStore.getCharacter(Number(id));
-  }, []);
+    console.log('Character Details');
+    if (id) {
+      characterStore.getCharacter(Number(id));
+    }
+  }, [id]);
 
   if (loading) {
     return <Loading />;

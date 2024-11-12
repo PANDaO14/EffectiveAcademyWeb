@@ -8,9 +8,6 @@ import api from 'api/index';
 import CardDTO from 'types/CardDTO';
 import CharacterCardDetailsDTO from 'types/CharacterCardDetailsDTO';
 
-// Stores
-import paginationStore from './PaginationStore';
-
 class CharacterStore {
   @observable
   characters: CardDTO[] = [];
@@ -21,43 +18,33 @@ class CharacterStore {
   @observable
   loading: boolean = false;
 
+  @observable
+  total: number = 0;
+
+  @observable
+  limit: number = 0;
+
   constructor() {
     makeObservable(this);
   }
 
   @action
-  getCharactersList = async (offsetValue: number): Promise<void> => {
+  getCharactersList = async (
+    offsetValue: number,
+    nameStartsWith?: string
+  ): Promise<void> => {
     try {
       this.loading = true;
 
       const { limit, total, results } = await api.characters.getCharactersList(
-        offsetValue
+        offsetValue,
+        nameStartsWith
       );
 
       runInAction(() => {
         this.characters = results;
-        paginationStore.setPagination(total, limit);
-      });
-    } catch (error) {
-      toast.error(`Ошибка ${error}`);
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
-    }
-  };
-
-  @action
-  getCharactersListBySearch = async (nameStartsWith: string): Promise<void> => {
-    try {
-      this.loading = true;
-
-      const { limit, total, results } =
-        await api.characters.getCharactersListBySearch(nameStartsWith);
-
-      runInAction(() => {
-        this.characters = results;
-        paginationStore.setPagination(total, limit);
+        this.total = total;
+        this.limit = limit;
       });
     } catch (error) {
       toast.error(`Ошибка ${error}`);
