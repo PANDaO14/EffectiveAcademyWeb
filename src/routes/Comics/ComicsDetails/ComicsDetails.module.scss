@@ -1,0 +1,46 @@
+@use '../../../styles/colors';
+
+.comics_details {
+  display: flex;
+  align-items: center;
+
+  .comics_img_section {
+    margin-bottom: 15px;
+  }
+
+  .comics_details_info_section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 50px;
+
+    .comics_details_info {
+      .comics_details_name {
+        font-weight: bold;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: colors.$primary-color;
+      }
+
+      .comics_details_desc {
+        font-size: 0.9rem;
+      }
+    }
+
+    .comics_details_info_comics {
+      .comics_details_comics_title {
+        font-weight: bold;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+
+      .comics_details_comics {
+        display: flex;
+        flex-direction: column;
+
+        .comics_details_comics_links {
+          color: colors.$lightblue-color;
+        }
+      }
+    }
+  }
+}

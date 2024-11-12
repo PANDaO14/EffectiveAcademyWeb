@@ -1,0 +1,49 @@
+@use '../../../styles/colors';
+
+.character_details {
+  .character_img_section {
+    width: 100%;
+    margin-bottom: 15px;
+
+    .character_img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .character_details_info_section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 50px;
+
+    .character_details_info {
+      .character_details_name {
+        font-weight: bold;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: colors.$primary-color;
+      }
+
+      .character_details_desc {
+        font-size: 0.9rem;
+      }
+    }
+
+    .character_details_info_comics {
+      .character_details_comics_title {
+        font-weight: bold;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+
+      .character_details_comics {
+        display: flex;
+        flex-direction: column;
+
+        .character_details_comics_links {
+          color: colors.$lightblue-color;
+        }
+      }
+    }
+  }
+}

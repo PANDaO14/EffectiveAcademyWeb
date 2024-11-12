@@ -40,6 +40,7 @@
     "react-hooks/exhaustive-deps": "off",
     "react/jsx-props-no-spreading": "off",
     "react/require-default-props": "off",
+    "react/react-in-jsx-scope": "off",
     "import/no-extraneous-dependencies": "off",
     "react/jsx-indent-props": [2, 2],
     "react/jsx-closing-bracket-location": [2, "tag-aligned"],

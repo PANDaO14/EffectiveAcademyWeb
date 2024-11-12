@@ -1,0 +1,27 @@
+@use '../../styles/colors';
+
+.marvel_header {
+  background-color: colors.$primary-color;
+
+  .header_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .marvel_logo {
+      max-width: 64px;
+      height: auto;
+    }
+
+    .marvel_nav_list {
+      display: flex;
+      gap: 5px;
+
+      .marvel_links {
+        color: colors.$orange-color;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+    }
+  }
+}

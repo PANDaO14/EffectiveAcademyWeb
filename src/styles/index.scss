@@ -1,0 +1,29 @@
+@use 'colors';
+@import url(./reset.css);
+@import url(./fonts.css);
+
+:root {
+  font-family: 'Agdasima', 'sans-serif';
+  font-weight: normal;
+  font-size: 20px;
+
+  min-height: 100vh;
+}
+
+.container {
+  padding: 15px;
+}
+
+.inner_container {
+  padding: 0 25px;
+}
+
+.divider {
+  border: 1px solid colors.$border-color;
+}
+
+.loading {
+  text-align: center;
+  font-size: 6rem;
+  font-weight: bold;
+}
