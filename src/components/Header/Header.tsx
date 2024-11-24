@@ -1,10 +1,14 @@
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // Styles
+import Localization from 'components/Localization';
 import classes from './Header.module.scss';
 
 const Header: FC = () => {
+  const { t } = useTranslation();
+
   return (
     <header className={classes.marvel_header}>
       <div className="container">
@@ -16,6 +20,8 @@ const Header: FC = () => {
           />
           <nav id="Navbar" className={classes.marvel_nav}>
             <ul className={classes.marvel_nav_list}>
+              <Localization />
+
               <li>
                 <NavLink
                   className={classes.marvel_links}
@@ -24,7 +30,7 @@ const Header: FC = () => {
                     textDecoration: isActive ? 'underline' : 'none'
                   })}
                 >
-                  Characters
+                  {t('Characters')}
                 </NavLink>
               </li>
               <li>
@@ -35,7 +41,7 @@ const Header: FC = () => {
                     textDecoration: isActive ? 'underline' : 'none'
                   })}
                 >
-                  Comics
+                  {t('Comics')}
                 </NavLink>
               </li>
             </ul>

@@ -21,6 +21,11 @@
         color: colors.$orange-color;
         font-size: 1.2rem;
         font-weight: bold;
+        transition: 0.3s linear;
+
+        &:hover {
+          color: colors.$lightblue-color;
+        }
       }
     }
   }

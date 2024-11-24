@@ -1,13 +1,12 @@
 import { FC } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
 
+// Types
+import ComicsCardDetailsDTO from 'types/ComicsCardDetailsDTO';
 import characterData from '../../Characters/CharactersData';
 
 // Styles
 import classes from './ComicsDetails.module.scss';
-
-// Types
-import ComicsCardDetailsDTO from 'types/ComicsCardDetailsDTO';
 
 const ComicsDetails: FC = () => {
   const comics: ComicsCardDetailsDTO = useOutletContext();
