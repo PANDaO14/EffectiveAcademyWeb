@@ -1,0 +1,39 @@
+@use '../../styles/colors';
+
+.card {
+  border: 2px solid colors.$primary-color;
+  border-radius: 1em;
+  transition: 0.2s linear;
+  height: auto;
+  overflow: hidden;
+
+  .card_img {
+    width: 100%;
+    height: 50%;
+  }
+
+  .card_container {
+    padding: 10px 10px 20px;
+
+    .card_title {
+      font-size: 1.3rem;
+      color: colors.$primary-color;
+      font-weight: bold;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .card_desc {
+      color: colors.$grey-color;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      -webkit-line-clamp: 3;
+    }
+  }
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
