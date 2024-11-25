@@ -1,0 +1,54 @@
+@use '../../styles/colors';
+
+.pagination {
+  margin-top: 20px;
+  font-size: 1.4rem;
+
+  .pagination__nums {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .pagination__nums_prev_btn {
+    .pagination__nums_prev_btn_icon {
+      vertical-align: middle;
+      width: 32px;
+      height: auto;
+      margin-right: 10px;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.2;
+    }
+  }
+
+  .pagination__nums_btn {
+    color: colors.$primary-color;
+    border-radius: 5px;
+    width: 45px;
+    height: auto;
+    padding: 5px;
+
+    &.active {
+      color: colors.$white-color;
+      background-color: colors.$orange-color;
+    }
+  }
+
+  .pagination__nums_next_btn {
+    .pagination__nums_next_btn_icon {
+      width: 30px;
+      height: auto;
+      vertical-align: middle;
+      margin-left: 10px;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.2;
+    }
+  }
+}
