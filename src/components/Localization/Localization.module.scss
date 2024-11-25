@@ -1,0 +1,30 @@
+@use './../../styles/colors';
+
+.custom_select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 2px 20px;
+  font-size: 1.2rem;
+  border: 2px solid #ccc;
+  border-radius: 0.5rem;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.custom_select:hover {
+  border-color: #007bff;
+}
+
+.custom_select:focus {
+  outline: none;
+  border-color: #0056b3;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.custom_select option {
+  font-size: 1rem;
+  padding: 10px;
+}

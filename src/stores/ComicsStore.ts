@@ -73,6 +73,11 @@ class ComicsStore {
       });
     }
   };
+
+  @action
+  reset() {
+    this.comics = null;
+  }
 }
 
 const comicsStore = new ComicsStore();

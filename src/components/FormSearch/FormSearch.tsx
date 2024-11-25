@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Styles
 import classes from './FormSearch.module.scss';
@@ -10,6 +11,8 @@ interface FormSearchProps {
 }
 
 const FormSearch: FC<FormSearchProps> = ({ type, count, setSearchTerm }) => {
+  const { t } = useTranslation();
+
   const handleChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
@@ -40,7 +43,7 @@ const FormSearch: FC<FormSearchProps> = ({ type, count, setSearchTerm }) => {
           onChange={handleChangeSearch}
         />
         <button className={classes.search_section_btn} type="submit">
-          Search
+          {t('Search')}
         </button>
       </form>
     </section>

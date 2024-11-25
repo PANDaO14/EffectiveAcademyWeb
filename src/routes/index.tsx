@@ -34,6 +34,14 @@ const routes: RouteObject[] = [
         ]
       }
     ]
+  },
+  {
+    path: '404',
+    element: <div>Not Found</div>
+  },
+  {
+    path: '*',
+    element: <Navigate to="/404" />
   }
 ];
 

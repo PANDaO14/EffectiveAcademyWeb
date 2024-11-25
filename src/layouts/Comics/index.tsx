@@ -1,4 +1,5 @@
-import { FC } from 'react';
+import { observer } from 'mobx-react-lite';
+import { FC, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 
 // Routes
@@ -10,10 +11,15 @@ import comicsStore from 'stores/ComicsStore';
 const ComicsLayout: FC = () => {
   const { id } = useParams();
 
-  const { AllComics } = comicsStore;
-  const comicsDetails = AllComics.find((com) => com.id === Number(id));
+  useEffect(() => {
+    if (!id) return;
 
-  return <>{comicsDetails ? <Outlet /> : <Comics />}</>;
+    comicsStore.reset();
+
+    comicsStore.getComics(Number(id));
+  }, [id]);
+
+  return <>{id ? <Outlet /> : <Comics />}</>;
 };
 
-export default ComicsLayout;
+export default observer(ComicsLayout);

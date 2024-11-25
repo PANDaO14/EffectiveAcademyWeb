@@ -6,6 +6,7 @@
       "layouts/*": ["src/layouts/*"],
       "routes/*": ["src/routes/*"],
       "types/*": ["src/types/*"],
+      "localization/*": ["src/localization/*"],
       "stores/*": ["src/stores/*"],
       "api/*": ["src/api/*"],
       "config/*": ["src/config/*"],

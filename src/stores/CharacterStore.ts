@@ -73,6 +73,11 @@ class CharacterStore {
       });
     }
   };
+
+  @action
+  reset() {
+    this.character = null;
+  }
 }
 
 const characterStore = new CharacterStore();

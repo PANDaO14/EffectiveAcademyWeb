@@ -1,26 +1,18 @@
-import { FC, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-
-// Styles
 
 // Stores
 import characterStore from 'stores/CharacterStore';
 
 // Components
 import Loading from 'components/Loading';
+
+// Styles
 import classes from './CharacterDetails.module.scss';
 
 const CharacterDetails: FC = () => {
-  const { id } = useParams();
   const { character, loading } = characterStore;
-
-  useEffect(() => {
-    console.log('Character Details');
-    if (id) {
-      characterStore.getCharacter(Number(id));
-    }
-  }, [id]);
 
   if (loading) {
     return <Loading />;
@@ -28,7 +20,7 @@ const CharacterDetails: FC = () => {
 
   return (
     <main className={classes.character_details}>
-      {!character ? null : (
+      {character && (
         <>
           <section className={classes.character_img_section}>
             <img

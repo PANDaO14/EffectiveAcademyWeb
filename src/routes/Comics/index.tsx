@@ -1,10 +1,11 @@
 import { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
 
 // Components
 import FormSearch from 'components/FormSearch/FormSearch';
-import ComicsCard from 'components/Cards/ComicsCard/ComicsCard';
+import Card from 'components/Cards/Card';
 import Loading from 'components/Loading';
 import Pagination from 'components/Pagination/Pagination';
 import NothingFound from 'components/NothingFound';
@@ -18,6 +19,8 @@ import useDebounce from 'hooks/useDebounce';
 import classes from './Comics.module.scss';
 
 const Comics: FC = () => {
+  const { t } = useTranslation();
+
   const { AllComics, loading, total, limit } = comicsStore;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -41,7 +44,11 @@ const Comics: FC = () => {
   return (
     <main>
       <div className="inner_container">
-        <FormSearch type="Comics" count={total} setSearchTerm={setSearchTerm} />
+        <FormSearch
+          type={t('Comics')}
+          count={total}
+          setSearchTerm={setSearchTerm}
+        />
         <hr className="divider" />
         {loading && <Loading />}
         <section className={classes.comics_cards}>
@@ -49,7 +56,7 @@ const Comics: FC = () => {
             AllComics.length > 0 &&
             AllComics.map((com) => (
               <Link to={`/comics/${com.id}`} key={com.id}>
-                <ComicsCard {...com} key={com.id} />
+                <Card {...com} key={com.id} />
               </Link>
             ))}
         </section>

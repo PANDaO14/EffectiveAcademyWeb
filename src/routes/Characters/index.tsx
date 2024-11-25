@@ -1,16 +1,17 @@
 import { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
 
 // Components
 import FormSearch from 'components/FormSearch/FormSearch';
-import CharacterCard from 'components/Cards/CharacterCard/CharacterCard';
+import Card from 'components/Cards/Card';
 import Loading from 'components/Loading';
 import Pagination from 'components/Pagination/Pagination';
 import NothingFound from 'components/NothingFound';
 
 // Stores
-import characterStore from 'stores/CharacterStore';
+import charactersStore from 'stores/CharacterStore';
 
 // Hooks
 import useDebounce from 'hooks/useDebounce';
@@ -18,11 +19,13 @@ import useDebounce from 'hooks/useDebounce';
 import classes from './Characters.module.scss';
 
 const Characters: FC = () => {
-  const { characters, loading, total, limit } = characterStore;
+  const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
-
   const [searchTerm, setSearchTerm] = useState('');
-  const debouncedSearchTerm = useDebounce(searchTerm, 1000);
+
+  const { characters, loading, total, limit } = charactersStore;
+
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const offset = (currentPage - 1) * limit;
 
@@ -32,9 +35,9 @@ const Characters: FC = () => {
 
   useEffect(() => {
     if (debouncedSearchTerm) {
-      characterStore.getCharactersList(offset, debouncedSearchTerm);
+      charactersStore.getCharactersList(offset, debouncedSearchTerm);
     } else {
-      characterStore.getCharactersList(offset);
+      charactersStore.getCharactersList(offset);
     }
   }, [debouncedSearchTerm, offset]);
 
@@ -42,7 +45,7 @@ const Characters: FC = () => {
     <main>
       <div className="inner_container">
         <FormSearch
-          type="Characters"
+          type={t('Characters')}
           count={total}
           setSearchTerm={setSearchTerm}
         />
@@ -53,7 +56,7 @@ const Characters: FC = () => {
             characters.length > 0 &&
             characters.map((character) => (
               <Link to={`/characters/${character.id}`} key={character.id}>
-                <CharacterCard {...character} />
+                <Card {...character} key={character.id} />
               </Link>
             ))}
         </section>
@@ -62,9 +65,9 @@ const Characters: FC = () => {
         )}
         <Pagination
           currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalItems={total}
           itemsPerPage={limit}
+          totalItems={total}
+          setCurrentPage={setCurrentPage}
         />
       </div>
     </main>

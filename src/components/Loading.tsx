@@ -1,7 +1,10 @@
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Loading: FC = () => {
-  return <div className="loading">Loading...</div>;
+  const { t } = useTranslation();
+
+  return <div className="loading">{t('Loading')}...</div>;
 };
 
 export default Loading;

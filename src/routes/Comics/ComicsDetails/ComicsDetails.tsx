@@ -1,26 +1,18 @@
-import { FC, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-
-// Styles
 
 // Stores
 import comicsStore from 'stores/ComicsStore';
 
 // Components
 import Loading from 'components/Loading';
+
+// Styles
 import classes from './ComicsDetails.module.scss';
 
 const ComicsDetails: FC = () => {
-  const { id } = useParams();
   const { comics, loading } = comicsStore;
-
-  useEffect(() => {
-    console.log('Comics Details');
-    if (id) {
-      comicsStore.getComics(Number(id));
-    }
-  }, [id]);
 
   if (loading) {
     return <Loading />;
