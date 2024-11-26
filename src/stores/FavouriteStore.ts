@@ -30,7 +30,7 @@ class FavouriteStore {
     if (index === -1) {
       this.favourites.push(card);
     } else {
-      this.favourites.splice(index, 1);
+      this.favourites = this.favourites.filter((fav) => fav.id !== card.id);
     }
 
     this.saveToLocalStorage();

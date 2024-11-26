@@ -44,6 +44,17 @@ const Header: FC = () => {
                   {t('Comics')}
                 </NavLink>
               </li>
+              <li>
+                <NavLink
+                  className={classes.marvel_links}
+                  to="/favourites"
+                  style={({ isActive }) => ({
+                    textDecoration: isActive ? 'underline' : 'none'
+                  })}
+                >
+                  {t('Favourites')}
+                </NavLink>
+              </li>
             </ul>
           </nav>
         </div>

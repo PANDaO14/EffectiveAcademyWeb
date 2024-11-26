@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
 
@@ -55,9 +54,7 @@ const Comics: FC = () => {
           {!loading &&
             AllComics.length > 0 &&
             AllComics.map((com) => (
-              <Link to={`/comics/${com.id}`} key={com.id}>
-                <Card {...com} key={com.id} />
-              </Link>
+              <Card {...com} cardType="comic" key={com.id} />
             ))}
         </section>
         {!loading && debouncedSearchTerm && AllComics.length === 0 && (

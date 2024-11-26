@@ -7,4 +7,5 @@ export default interface CardDTO {
     path: string;
     extension: string;
   };
+  cardType: string;
 }
