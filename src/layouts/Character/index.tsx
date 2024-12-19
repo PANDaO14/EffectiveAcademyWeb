@@ -1,25 +1,25 @@
-import { FC } from 'react';
+import { observer } from 'mobx-react-lite';
+import { FC, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 
 // Routes
 import Characters from 'routes/Characters';
-import characterData from 'routes/Characters/CharactersData';
+
+// Stores
+import characterStore from 'stores/CharacterStore';
 
 const CharacterLayout: FC = () => {
   const { id } = useParams();
-  const characterDetails = characterData.find(
-    (character) => character.id === Number(id)
-  );
 
-  return (
-    <>
-      {characterDetails ? (
-        <Outlet context={characterDetails} />
-      ) : (
-        <Characters />
-      )}
-    </>
-  );
+  useEffect(() => {
+    if (!id) return;
+
+    characterStore.reset();
+
+    characterStore.getCharacter(Number(id));
+  }, [id]);
+
+  return <>{id ? <Outlet /> : <Characters />}</>;
 };
 
-export default CharacterLayout;
+export default observer(CharacterLayout);

@@ -6,7 +6,11 @@
       "layouts/*": ["src/layouts/*"],
       "routes/*": ["src/routes/*"],
       "types/*": ["src/types/*"],
-      "localization/*": ["src/localization/*"]
+      "localization/*": ["src/localization/*"],
+      "stores/*": ["src/stores/*"],
+      "api/*": ["src/api/*"],
+      "config/*": ["src/config/*"],
+      "hooks/*": ["src/hooks/*"]
     },
     "target": "ES2020",
     "useDefineForClassFields": true,
