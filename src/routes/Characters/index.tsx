@@ -1,12 +1,12 @@
-import { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
+import { ListProps, VirtuosoGrid } from 'react-virtuoso';
 
 // Components
 import FormSearch from 'components/FormSearch/FormSearch';
 import Card from 'components/Cards/Card';
 import Loading from 'components/Loading';
-import Pagination from 'components/Pagination/Pagination';
 import NothingFound from 'components/NothingFound';
 
 // Stores
@@ -17,28 +17,46 @@ import useDebounce from 'hooks/useDebounce';
 
 import classes from './Characters.module.scss';
 
+const List = React.forwardRef<HTMLDivElement, ListProps>(
+  ({ children, ...props }, ref) => (
+    <div ref={ref} {...props} className={classes.characters_cards}>
+      {children}
+    </div>
+  )
+);
+
 const Characters: FC = () => {
   const { t } = useTranslation();
-  const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
+  const [offset, setOffset] = useState(0);
 
   const { characters, loading, total, limit } = charactersStore;
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  const offset = (currentPage - 1) * limit;
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [debouncedSearchTerm]);
+  const loadMoreCharacters = useCallback(() => {
+    if (characters.length < total) {
+      setOffset((prevOffset) => prevOffset + limit);
+    }
+  }, [characters.length, total, limit]);
 
   useEffect(() => {
     if (debouncedSearchTerm) {
-      charactersStore.getCharactersList(offset, debouncedSearchTerm);
+      setOffset(0);
+      charactersStore.clearCharacters();
+      charactersStore.getCharactersList(0, debouncedSearchTerm);
     } else {
-      charactersStore.getCharactersList(offset);
+      setOffset(0);
+      charactersStore.clearCharacters();
+      charactersStore.getCharactersList(0);
     }
-  }, [debouncedSearchTerm, offset]);
+  }, [debouncedSearchTerm]);
+
+  useEffect(() => {
+    if (offset > 0) {
+      charactersStore.getCharactersList(offset, debouncedSearchTerm);
+    }
+  }, [offset, debouncedSearchTerm]);
 
   return (
     <main>
@@ -49,22 +67,22 @@ const Characters: FC = () => {
           setSearchTerm={setSearchTerm}
         />
         <hr className="divider" />
-        {loading && <Loading />}
-        <section className={classes.characters_cards}>
-          {!loading &&
-            characters.length > 0 &&
-            characters.map((character) => (
-              <Card {...character} cardType="character" key={character.id} />
-            ))}
-        </section>
         {!loading && debouncedSearchTerm && characters.length === 0 && (
           <NothingFound />
         )}
-        <Pagination
-          currentPage={currentPage}
-          itemsPerPage={limit}
-          totalItems={total}
-          setCurrentPage={setCurrentPage}
+        <VirtuosoGrid
+          useWindowScroll
+          data={characters}
+          increaseViewportBy={limit}
+          itemContent={(index, character) => {
+            return <Card {...character} cardType="character" key={index} />;
+          }}
+          components={{
+            List,
+            Footer: Loading
+          }}
+          endReached={loadMoreCharacters}
+          style={{ minHeight: '100vh' }}
         />
       </div>
     </main>

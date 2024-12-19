@@ -30,19 +30,23 @@ class CharacterStore {
 
   @action
   getCharactersList = async (
-    offsetValue: number,
+    offset: number,
     nameStartsWith?: string
   ): Promise<void> => {
     try {
       this.loading = true;
 
       const { limit, total, results } = await api.characters.getCharactersList(
-        offsetValue,
+        offset,
         nameStartsWith
       );
 
       runInAction(() => {
-        this.characters = results;
+        if (offset === 0) {
+          this.characters = results;
+        } else {
+          this.characters = [...this.characters, ...results];
+        }
         this.total = total;
         this.limit = limit;
       });
@@ -73,6 +77,12 @@ class CharacterStore {
       });
     }
   };
+
+  @action
+  clearCharacters() {
+    this.characters = [];
+    this.total = 0;
+  }
 
   @action
   reset() {

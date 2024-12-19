@@ -42,7 +42,11 @@ class ComicsStore {
       );
 
       runInAction(() => {
-        this.AllComics = results;
+        if (offset === 0) {
+          this.AllComics = results;
+        } else {
+          this.AllComics = [...this.AllComics, ...results];
+        }
         this.total = total;
         this.limit = limit;
       });
@@ -73,6 +77,12 @@ class ComicsStore {
       });
     }
   };
+
+  @action
+  clearComics() {
+    this.AllComics = [];
+    this.total = 0;
+  }
 
   @action
   reset() {

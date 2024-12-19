@@ -11,5 +11,5 @@ export default {
   privateKey: envs.VITE_PRIVATE_KEY,
   ts,
   hash,
-  limit: 10
+  limit: 20
 };
